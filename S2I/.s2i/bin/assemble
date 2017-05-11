@@ -27,10 +27,10 @@ then
     ROOT_PACKAGE=$GOPROJECT_ROOT
 else
 	ROOT_PACKAGE=$(echo "$SOURCE_REPOSITORY_URL" | sed -re "s/(https:\/\/|git@)([^?]+)\.git/\2/g" | sed -re "s/:/\//g")
-	if [[ -n "${CONTEXT_DIR/[ ]*\n/}" ]]
+	if [[ -n "${SOURCE_CONTEXT_DIR/[ ]*\n/}" ]]
 	then
-		ROOT_PACKAGE="$ROOT_PACKAGE/$CONTEXT_DIR"
-		echo "CONTEXT_DIR is \"$CONTEXT_DIR\", so root package is \"$ROOT_PACKAGE\""
+		ROOT_PACKAGE="$ROOT_PACKAGE/$SOURCE_CONTEXT_DIR"
+		echo "CONTEXT_DIR is \"$SOURCE_CONTEXT_DIR\", so root package is \"$ROOT_PACKAGE\""
 	else
 		echo "CONTEXT_DIR is empty, so root package is \"$ROOT_PACKAGE\""
 	fi
@@ -40,7 +40,7 @@ SOURCE_CODE="$GOPATH/src/$ROOT_PACKAGE"
 echo "---> Installing application source in folder \"$SOURCE_CODE\""
 mkdir -p $SOURCE_CODE
 cd $SOURCE_CODE
-cp -Rf /tmp/src/. ./
+cp -Rf /tmp/s2i*/upload/src/. ./
 
 mkdir -p $GOPATH/bin
 
